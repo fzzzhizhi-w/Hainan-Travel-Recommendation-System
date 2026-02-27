@@ -65,7 +65,8 @@
 
       <div class="routes-grid">
         <div v-for="route in sortedRoutes" :key="route.id" class="route-card">
-          <div class="card-cover" :style="{ background: route.color }">
+          <div class="card-cover" :style="route.image ? {} : { background: route.color }">
+            <img v-if="route.image" :src="route.image" :alt="route.title" class="card-img" />
             <span class="card-cover-title">{{ route.name }}</span>
             <div class="card-badges">
               <span v-if="route.isRecommended" class="badge rec-badge">个性推荐</span>
@@ -116,42 +117,42 @@ export default {
       routes: [
         {
           id: 1, name: '三亚精华', title: '三亚5日精华游', tags: ['海边度假'], days: 5, nights: 4,
-          highlights: '亚龙湾·天涯海角·蜈支洲岛三大必游地，全程无强制购物', price: 2980, color: '#4A8FA8',
+          highlights: '亚龙湾·天涯海角·蜈支洲岛三大必游地，全程无强制购物', price: 2980, color: '#4A8FA8', image: 'https://picsum.photos/seed/sanya/400/320',
           rating: 5, ratingDecimal: 0, reviewCount: 128, isRecommended: true, isSeasonal: false, favorited: false,
         },
         {
           id: 2, name: '海口文化', title: '海口人文3日游', tags: ['人文古迹', '美食探店'], days: 3, nights: 2,
-          highlights: '骑楼老街·五公祠·冯小刚电影公社，深度体验海南人文历史', price: 1580, color: '#5B9E6E',
+          highlights: '骑楼老街·五公祠·冯小刚电影公社，深度体验海南人文历史', price: 1580, color: '#5B9E6E', image: 'https://picsum.photos/seed/haikou/400/320',
           rating: 4, ratingDecimal: 5, reviewCount: 86, isRecommended: false, isSeasonal: false, favorited: false,
         },
         {
           id: 3, name: '雨林探秘', title: '五指山雨林7日行', tags: ['雨林探险'], days: 7, nights: 6,
-          highlights: '五指山国家公园·黎族村寨·热带植物园，远离城市的自然疗愈之旅', price: 3680, color: '#8B6E4A',
+          highlights: '五指山国家公园·黎族村寨·热带植物园，远离城市的自然疗愈之旅', price: 3680, color: '#8B6E4A', image: 'https://picsum.photos/seed/wuzhishan/400/320',
           rating: 4, ratingDecimal: 5, reviewCount: 64, isRecommended: false, isSeasonal: true, favorited: false,
         },
         {
           id: 4, name: '亲子乐园', title: '万宁亲子5日游', tags: ['亲子遛娃', '海边度假'], days: 5, nights: 4,
-          highlights: '石梅湾·日月湾·冲浪体验·神州半岛，亲子友好全程无忧', price: 3280, color: '#A84A8F',
+          highlights: '石梅湾·日月湾·冲浪体验·神州半岛，亲子友好全程无忧', price: 3280, color: '#A84A8F', image: 'https://picsum.photos/seed/wanning/400/320',
           rating: 5, ratingDecimal: 0, reviewCount: 95, isRecommended: true, isSeasonal: false, favorited: false,
         },
         {
           id: 5, name: '美食之旅', title: '全岛美食5日探店', tags: ['美食探店'], days: 5, nights: 4,
-          highlights: '文昌鸡·加积鸭·东山羊·海鲜大排档，舌尖上的海南岛', price: 2180, color: '#E8824A',
+          highlights: '文昌鸡·加积鸭·东山羊·海鲜大排档，舌尖上的海南岛', price: 2180, color: '#E8824A', image: 'https://picsum.photos/seed/hainanfood/400/320',
           rating: 4, ratingDecimal: 0, reviewCount: 73, isRecommended: false, isSeasonal: false, favorited: false,
         },
         {
           id: 6, name: '环岛骑行', title: '海南环岛10日骑行', tags: ['户外运动'], days: 10, nights: 9,
-          highlights: '沿海公路骑行·环岛最美公路·民宿体验，挑战自我的旅行方式', price: 4580, color: '#4A6EA8',
+          highlights: '沿海公路骑行·环岛最美公路·民宿体验，挑战自我的旅行方式', price: 4580, color: '#4A6EA8', image: 'https://picsum.photos/seed/cycling/400/320',
           rating: 4, ratingDecimal: 5, reviewCount: 41, isRecommended: false, isSeasonal: false, favorited: false,
         },
         {
           id: 7, name: '陵水休闲', title: '陵水清水湾3日休闲游', tags: ['海边度假'], days: 3, nights: 2,
-          highlights: '清水湾·香水湾·新村渔港，小众海湾避开人流高峰', price: 1880, color: '#4A8F6E',
+          highlights: '清水湾·香水湾·新村渔港，小众海湾避开人流高峰', price: 1880, color: '#4A8F6E', image: 'https://picsum.photos/seed/lingshui/400/320',
           rating: 4, ratingDecimal: 5, reviewCount: 52, isRecommended: true, isSeasonal: false, favorited: false,
         },
         {
           id: 8, name: '文昌航天', title: '文昌航天科技5日游', tags: ['人文古迹'], days: 5, nights: 4,
-          highlights: '文昌航天发射场·东郊椰林·铜鼓岭，科技与自然的完美融合', price: 2580, color: '#6E4A8B',
+          highlights: '文昌航天发射场·东郊椰林·铜鼓岭，科技与自然的完美融合', price: 2580, color: '#6E4A8B', image: 'https://picsum.photos/seed/wenchang/400/320',
           rating: 4, ratingDecimal: 0, reviewCount: 38, isRecommended: false, isSeasonal: false, favorited: false,
         },
       ],
@@ -298,11 +299,23 @@ export default {
   justify-content: center;
   position: relative;
   gap: 8px;
+  overflow: hidden;
+}
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 .card-cover-title {
   color: var(--color-white);
   font-size: 20px;
   font-weight: var(--font-weight-semibold);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
 }
 .card-badges {
   display: flex;
@@ -310,6 +323,7 @@ export default {
   position: absolute;
   top: 12px;
   left: 12px;
+  z-index: 2;
 }
 .badge {
   padding: 2px 8px;
