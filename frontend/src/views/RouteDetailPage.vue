@@ -59,16 +59,16 @@
           <h2 class="section-title">用户评价</h2>
           <div v-for="review in route.reviews" :key="review.name" class="review-card">
             <div class="review-header">
-              <div class="review-avatar">{{ review.name[0] }}</div>
+              <div class="review-avatar">{{ review.name ? review.name[0] : '?' }}</div>
               <div>
-                <div class="review-name">{{ review.name }}</div>
+                <div class="review-name">{{ review.name || '匿名用户' }}</div>
                 <div class="star-row">
-                  <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= review.rating }">★</span>
+                  <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= (review.rating || 0) }">★</span>
                 </div>
               </div>
-              <span class="review-date">{{ review.date }}</span>
+              <span class="review-date">{{ review.date || '' }}</span>
             </div>
-            <p class="review-text">{{ review.text }}</p>
+            <p class="review-text">{{ review.text || '' }}</p>
           </div>
         </div>
       </div>

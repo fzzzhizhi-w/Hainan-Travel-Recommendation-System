@@ -26,7 +26,7 @@
 html, body {
   height: 100%;
   background: var(--color-bg);
-  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
   font-weight: var(--font-weight-normal);
   line-height: 1.6;
   color: var(--color-text);

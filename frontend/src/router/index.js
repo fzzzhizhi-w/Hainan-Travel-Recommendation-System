@@ -11,6 +11,7 @@ const routes = [
   { path: '/route/:id', component: RouteDetailPage },
   { path: '/orders', component: PersonalCenterPage, props: { initialTab: 'orders' } },
   { path: '/profile', component: PersonalCenterPage, props: { initialTab: 'profile' } },
+  { path: '/reviews', component: PersonalCenterPage, props: { initialTab: 'reviews' } },
 ]
 
 const router = createRouter({
