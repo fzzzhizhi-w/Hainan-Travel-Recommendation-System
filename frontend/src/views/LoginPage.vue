@@ -15,6 +15,19 @@
 
         <!-- Login Form -->
         <form v-if="mode === 'login'" class="auth-form" @submit.prevent="handleLogin">
+          <div class="role-selector">
+            <button
+              v-for="r in roles"
+              :key="r.value"
+              type="button"
+              class="role-btn"
+              :class="{ active: login.role === r.value }"
+              @click="login.role = r.value"
+            >
+              <span class="role-icon">{{ r.icon }}</span>
+              <span>{{ r.label }}</span>
+            </button>
+          </div>
           <div class="form-field">
             <label class="form-label">手机号</label>
             <input v-model="login.phone" class="form-input" type="tel" placeholder="请输入手机号" maxlength="11" required />
@@ -33,8 +46,8 @@
           <button type="submit" class="submit-btn" :disabled="submitting">
             {{ submitting ? '登录中...' : '登录' }}
           </button>
-          <div class="divider"><span>或</span></div>
-          <div class="third-party">
+          <div v-if="login.role === 'user'" class="divider"><span>或</span></div>
+          <div v-if="login.role === 'user'" class="third-party">
             <button type="button" class="third-btn wechat-btn" @click="handleThirdPartyLogin('wechat')">
               <span class="third-icon">💚</span> 微信登录
             </button>
@@ -99,10 +112,16 @@ export default {
       smsCooldown: 0,
       toast: '',
       toastType: 'success',
+      roles: [
+        { value: 'user', label: '普通用户', icon: '👤' },
+        { value: 'admin', label: '管理员', icon: '🛡️' },
+        { value: 'merchant', label: '商家', icon: '🏪' },
+      ],
       login: {
         phone: '',
         password: '',
         remember: false,
+        role: 'user',
       },
       register: {
         phone: '',
@@ -121,7 +140,13 @@ export default {
         this.submitting = false
         this.showToast('登录成功！正在跳转...', 'success')
         setTimeout(() => {
-          this.$router.push(this.$route.query.redirect || '/')
+          if (this.login.role === 'admin') {
+            this.$router.push('/admin/dashboard')
+          } else if (this.login.role === 'merchant') {
+            this.$router.push('/merchant/dashboard')
+          } else {
+            this.$router.push(this.$route.query.redirect || '/')
+          }
         }, 1000)
       }, 800)
     },
@@ -287,6 +312,38 @@ export default {
   font-size: 13px;
   color: var(--color-text-light);
   cursor: pointer;
+}
+.role-selector {
+  display: flex;
+  gap: 8px;
+}
+.role-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.role-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.role-btn.active {
+  border-color: var(--color-primary);
+  background: #EBF4F8;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+.role-icon {
+  font-size: 20px;
 }
 .forgot-link {
   font-size: 13px;
