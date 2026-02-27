@@ -1,11 +1,17 @@
 <template>
-  <div class="app-layout">
-    <TopNav @toggle-sidebar="toggleSidebar" />
-    <div class="app-body">
-      <SideBar :collapsed="sidebarCollapsed" :mobile-open="sidebarOpen" @collapse="sidebarCollapsed = !sidebarCollapsed" @close="sidebarOpen = false" />
-      <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
-        <router-view />
-      </main>
+  <div class="app-root">
+    <!-- Blank layout: login page and admin/merchant have their own layouts -->
+    <router-view v-if="isBlankLayout" />
+
+    <!-- Standard user layout -->
+    <div v-else class="app-layout">
+      <TopNav @toggle-sidebar="toggleSidebar" />
+      <div class="app-body">
+        <SideBar :collapsed="sidebarCollapsed" :mobile-open="sidebarOpen" @collapse="sidebarCollapsed = !sidebarCollapsed" @close="sidebarOpen = false" />
+        <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
+          <router-view />
+        </main>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +29,12 @@ export default {
       sidebarOpen: false,
     }
   },
+  computed: {
+    isBlankLayout() {
+      const layout = this.$route.meta && this.$route.meta.layout
+      return layout === 'blank' || layout === 'admin' || layout === 'merchant'
+    }
+  },
   methods: {
     toggleSidebar() {
       if (window.innerWidth < 768) {
@@ -36,6 +48,9 @@ export default {
 </script>
 
 <style>
+.app-root {
+  height: 100%;
+}
 .app-layout {
   display: flex;
   flex-direction: column;
