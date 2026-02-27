@@ -155,7 +155,7 @@ export default {
   },
   data() {
     return {
-      currentTab: this.initialTab || 'orders',
+      currentTab: this.initialTab,
       orderSubTab: 'all',
       toast: '',
       tabs: [

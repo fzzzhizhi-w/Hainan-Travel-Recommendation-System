@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout">
-    <TopNav @toggle-sidebar="toggleSidebar" :sidebar-open="sidebarOpen" />
+    <TopNav @toggle-sidebar="toggleSidebar" />
     <div class="app-body">
       <SideBar :collapsed="sidebarCollapsed" :mobile-open="sidebarOpen" @collapse="sidebarCollapsed = !sidebarCollapsed" @close="sidebarOpen = false" />
       <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
