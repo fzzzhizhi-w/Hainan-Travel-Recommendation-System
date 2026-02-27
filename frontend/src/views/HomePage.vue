@@ -48,7 +48,8 @@
       </div>
       <div class="route-grid">
         <div v-for="route in routes" :key="route.id" class="route-card">
-          <div class="card-cover" :style="{ background: route.color }">
+          <div class="card-cover" :style="route.image ? {} : { background: route.color }">
+            <img v-if="route.image" :src="route.image" :alt="route.title" class="card-img" />
             <span class="card-cover-title">{{ route.name }}</span>
           </div>
           <div class="card-body">
@@ -115,12 +116,12 @@ export default {
         preferences: [],
       },
       routes: [
-        { id: 1, name: '三亚精华', title: '三亚5日精华游', tags: ['海边', '度假'], highlights: '亚龙湾·天涯海角·蜈支洲岛三大必游地', price: 2980, color: '#4A8FA8' },
-        { id: 2, name: '海口文化', title: '海口人文3日游', tags: ['人文', '美食'], highlights: '骑楼老街·五公祠·冯小刚电影公社', price: 1580, color: '#5B9E6E' },
-        { id: 3, name: '雨林探秘', title: '五指山雨林7日行', tags: ['雨林', '探险'], highlights: '五指山国家公园·黎族村寨·热带植物园', price: 3680, color: '#8B6E4A' },
-        { id: 4, name: '亲子乐园', title: '万宁亲子5日游', tags: ['亲子', '海边'], highlights: '石梅湾·日月湾·冲浪体验·神州半岛', price: 3280, color: '#A84A8F' },
-        { id: 5, name: '美食之旅', title: '全岛美食5日探店', tags: ['美食', '文化'], highlights: '文昌鸡·加积鸭·东山羊·海鲜大排档', price: 2180, color: '#E8824A' },
-        { id: 6, name: '环岛骑行', title: '海南环岛10日骑行', tags: ['运动', '自然'], highlights: '沿海公路骑行·环岛最美公路·民宿体验', price: 4580, color: '#4A6EA8' },
+        { id: 1, name: '三亚精华', title: '三亚5日精华游', tags: ['海边', '度假'], highlights: '亚龙湾·天涯海角·蜈支洲岛三大必游地', price: 2980, color: '#4A8FA8', image: 'https://picsum.photos/seed/sanya/400/360' },
+        { id: 2, name: '海口文化', title: '海口人文3日游', tags: ['人文', '美食'], highlights: '骑楼老街·五公祠·冯小刚电影公社', price: 1580, color: '#5B9E6E', image: 'https://picsum.photos/seed/haikou/400/360' },
+        { id: 3, name: '雨林探秘', title: '五指山雨林7日行', tags: ['雨林', '探险'], highlights: '五指山国家公园·黎族村寨·热带植物园', price: 3680, color: '#8B6E4A', image: 'https://picsum.photos/seed/wuzhishan/400/360' },
+        { id: 4, name: '亲子乐园', title: '万宁亲子5日游', tags: ['亲子', '海边'], highlights: '石梅湾·日月湾·冲浪体验·神州半岛', price: 3280, color: '#A84A8F', image: 'https://picsum.photos/seed/wanning/400/360' },
+        { id: 5, name: '美食之旅', title: '全岛美食5日探店', tags: ['美食', '文化'], highlights: '文昌鸡·加积鸭·东山羊·海鲜大排档', price: 2180, color: '#E8824A', image: 'https://picsum.photos/seed/hainanfood/400/360' },
+        { id: 6, name: '环岛骑行', title: '海南环岛10日骑行', tags: ['运动', '自然'], highlights: '沿海公路骑行·环岛最美公路·民宿体验', price: 4580, color: '#4A6EA8', image: 'https://picsum.photos/seed/cycling/400/360' },
       ],
       topAttractions: [
         { id: 1, name: '亚龙湾', area: '三亚', rating: 5 },
@@ -287,11 +288,23 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .card-cover-title {
   color: var(--color-white);
   font-size: 20px;
   font-weight: var(--font-weight-semibold);
+  position: relative;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 1;
 }
 .card-body {
   padding: 16px;

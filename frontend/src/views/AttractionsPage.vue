@@ -60,8 +60,9 @@
 
         <div class="attraction-list">
           <div v-for="attraction in sortedAttractions" :key="attraction.id" class="attraction-card">
-            <div class="card-image" :style="{ background: attraction.color }">
-              <span class="img-label">{{ attraction.name[0] }}</span>
+            <div class="card-image" :style="attraction.image ? {} : { background: attraction.color }">
+              <img v-if="attraction.image" :src="attraction.image" :alt="attraction.name" class="card-img" />
+              <span v-else class="img-label">{{ attraction.name[0] }}</span>
             </div>
             <div class="card-info">
               <div class="card-top">
@@ -101,7 +102,8 @@
           <button class="close-btn" @click="selectedAttraction = null">✕</button>
         </div>
         <div class="modal-body">
-          <div class="modal-image" :style="{ background: selectedAttraction.color }">
+          <div class="modal-image" :style="selectedAttraction.image ? {} : { background: selectedAttraction.color }">
+            <img v-if="selectedAttraction.image" :src="selectedAttraction.image" :alt="selectedAttraction.name" class="modal-img" />
             <button class="carousel-btn prev">‹</button>
             <span class="modal-img-label">{{ selectedAttraction.name }}</span>
             <button class="carousel-btn next">›</button>
@@ -175,7 +177,7 @@ export default {
       attractions: [
         {
           id: 1, name: '亚龙湾', area: '三亚', types: ['海滩'], rating: 5, ratingDecimal: 0,
-          price: 0, color: '#4A8FA8',
+          price: 0, color: '#4A8FA8', image: 'https://picsum.photos/seed/yalong/240/180',
           description: '被誉为"天下第一湾"，海水清澈，沙质细腻，是三亚最美的海滩之一。',
           openTime: '全天开放（景区内设施8:00-18:00）',
           transport: '从三亚市区乘坐25路公交车约40分钟可达，也可打车约30元。',
@@ -187,7 +189,7 @@ export default {
         },
         {
           id: 2, name: '天涯海角', area: '三亚', types: ['景区'], rating: 4, ratingDecimal: 5,
-          price: 81, color: '#5B9E6E',
+          price: 81, color: '#5B9E6E', image: 'https://picsum.photos/seed/tianya/240/180',
           description: '中国传统文化中爱情的象征，奇石矗立于海边，景色壮观。',
           openTime: '7:30-18:00（旺季延至19:00）',
           transport: '从三亚市区乘坐26路公交车可直达，车程约50分钟。',
@@ -199,7 +201,7 @@ export default {
         },
         {
           id: 3, name: '蜈支洲岛', area: '三亚', types: ['海滩', '景区'], rating: 5, ratingDecimal: 0,
-          price: 210, color: '#A84A8F',
+          price: 210, color: '#A84A8F', image: 'https://picsum.photos/seed/wuzhizhou/240/180',
           description: '三亚最美小岛，珊瑚礁丰富，是潜水爱好者的天堂。',
           openTime: '8:00-17:00，票含快艇来回',
           transport: '从海棠湾乘坐快艇约10分钟，景区有统一摆渡船。',
@@ -210,7 +212,7 @@ export default {
         },
         {
           id: 4, name: '骑楼老街', area: '海口', types: ['景区', '购物'], rating: 4, ratingDecimal: 0,
-          price: 0, color: '#E8824A',
+          price: 0, color: '#E8824A', image: 'https://picsum.photos/seed/qilou/240/180',
           description: '海口历史文化名片，保存完好的南洋骑楼建筑群，美食云集。',
           openTime: '全天开放',
           transport: '市区内步行或乘公交均可到达，B2路公交中山路站下车。',
@@ -221,7 +223,7 @@ export default {
         },
         {
           id: 5, name: '五公祠', area: '海口', types: ['博物馆', '景区'], rating: 4, ratingDecimal: 0,
-          price: 20, color: '#8B6E4A',
+          price: 20, color: '#8B6E4A', image: 'https://picsum.photos/seed/wugongci/240/180',
           description: '海南省最大的历史类展览馆，纪念被贬至琼的五位历史名臣。',
           openTime: '8:30-17:30，周一闭馆',
           transport: '乘坐海口市内公交12路、33路至五公祠站下车。',
@@ -232,7 +234,7 @@ export default {
         },
         {
           id: 6, name: '石梅湾', area: '万宁', types: ['海滩'], rating: 4, ratingDecimal: 5,
-          price: 0, color: '#4A6EA8',
+          price: 0, color: '#4A6EA8', image: 'https://picsum.photos/seed/shimei/240/180',
           description: '万宁最美的海湾，拥有中国最完整的原始热带海岸森林。',
           openTime: '全天开放',
           transport: '从万宁市区打车约25分钟，车程约30元。',
@@ -243,7 +245,7 @@ export default {
         },
         {
           id: 7, name: '东郊椰林', area: '文昌', types: ['景区', '公园'], rating: 4, ratingDecimal: 0,
-          price: 30, color: '#6E8B4A',
+          price: 30, color: '#6E8B4A', image: 'https://picsum.photos/seed/dongjiao/240/180',
           description: '文昌椰子之乡，万亩椰林连片，可骑行穿越椰林，品尝新鲜椰子。',
           openTime: '8:00-18:00',
           transport: '从文昌市区乘坐公交约40分钟，或打车约25元。',
@@ -254,7 +256,7 @@ export default {
         },
         {
           id: 8, name: '分界洲岛', area: '陵水', types: ['海滩', '景区'], rating: 4, ratingDecimal: 5,
-          price: 180, color: '#4A8F6E',
+          price: 180, color: '#4A8F6E', image: 'https://picsum.photos/seed/fenjie/240/180',
           description: '中国首个热带海洋性气候的分界线，岛屿景色独特，潜水资源丰富。',
           openTime: '8:00-17:00',
           transport: '从牛岭隧道北侧乘坐游船约20分钟到达。',
@@ -429,6 +431,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .img-label {
   color: var(--color-white);
@@ -565,6 +576,15 @@ export default {
   justify-content: space-between;
   padding: 0 16px;
   position: relative;
+  overflow: hidden;
+}
+.modal-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 .carousel-btn {
   background: rgba(255,255,255,0.7);
@@ -578,11 +598,16 @@ export default {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 .modal-img-label {
   color: var(--color-white);
   font-size: 22px;
   font-weight: var(--font-weight-semibold);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
 }
 .modal-sections {
   padding: 20px;

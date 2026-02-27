@@ -32,8 +32,9 @@
               <span class="order-status" :class="order.status">{{ statusLabels[order.status] }}</span>
             </div>
             <div class="order-body">
-              <div class="order-cover" :style="{ background: order.color }">
-                <span>{{ order.routeName[0] }}</span>
+              <div class="order-cover" :style="order.image ? {} : { background: order.color }">
+                <img v-if="order.image" :src="order.image" :alt="order.routeName" class="cover-img" />
+                <span v-else>{{ order.routeName[0] }}</span>
               </div>
               <div class="order-info">
                 <h3 class="order-route">{{ order.routeName }}</h3>
@@ -60,8 +61,9 @@
       <div v-if="currentTab === 'favorites'" class="tab-content">
         <div class="favorites-grid">
           <div v-for="item in favorites" :key="item.id" class="fav-card">
-            <div class="fav-cover" :style="{ background: item.color }">
-              <span>{{ item.name }}</span>
+            <div class="fav-cover" :style="item.image ? {} : { background: item.color }">
+              <img v-if="item.image" :src="item.image" :alt="item.title" class="cover-img" />
+              <span v-else>{{ item.name }}</span>
             </div>
             <div class="fav-body">
               <h3 class="fav-title">{{ item.title }}</h3>
@@ -114,8 +116,9 @@
           <div v-for="review in myReviews" :key="review.id" class="my-review-card">
             <div class="review-top">
               <div class="review-route-info">
-                <div class="review-cover" :style="{ background: review.color }">
-                  <span>{{ review.routeName[0] }}</span>
+                <div class="review-cover" :style="review.image ? {} : { background: review.color }">
+                  <img v-if="review.image" :src="review.image" :alt="review.routeName" class="cover-img" />
+                  <span v-else>{{ review.routeName[0] }}</span>
                 </div>
                 <div>
                   <h3 class="review-route-name">{{ review.routeName }}</h3>
@@ -204,19 +207,20 @@ export default {
         pending: '待支付',
         upcoming: '待出行',
         completed: '已完成',
+        reviewed: '已评价',
         cancelled: '已取消',
       },
       orders: [
-        { id: 'HN20240301001', routeName: '三亚5日精华游', date: '2024-04-15', count: 2, price: 5960, status: 'upcoming', createdAt: '2024-03-01', color: '#4A8FA8' },
-        { id: 'HN20240220002', routeName: '海口人文3日游', date: '2024-03-10', count: 2, price: 3160, status: 'completed', createdAt: '2024-02-20', color: '#5B9E6E' },
-        { id: 'HN20240115003', routeName: '五指山雨林7日行', date: '2024-02-05', count: 4, price: 14720, status: 'completed', createdAt: '2024-01-15', color: '#8B6E4A' },
-        { id: 'HN20240310004', routeName: '万宁亲子5日游', date: '2024-05-01', count: 3, price: 9840, status: 'pending', createdAt: '2024-03-10', color: '#A84A8F' },
-        { id: 'HN20240205005', routeName: '全岛美食5日探店', date: '2024-03-20', count: 2, price: 4360, status: 'cancelled', createdAt: '2024-02-05', color: '#E8824A' },
+        { id: 'HN20240301001', routeName: '三亚5日精华游', date: '2024-04-15', count: 2, price: 5960, status: 'upcoming', createdAt: '2024-03-01', color: '#4A8FA8', image: 'https://picsum.photos/seed/sanya/160/120' },
+        { id: 'HN20240220002', routeName: '海口人文3日游', date: '2024-03-10', count: 2, price: 3160, status: 'completed', createdAt: '2024-02-20', color: '#5B9E6E', image: 'https://picsum.photos/seed/haikou/160/120' },
+        { id: 'HN20240115003', routeName: '五指山雨林7日行', date: '2024-02-05', count: 4, price: 14720, status: 'completed', createdAt: '2024-01-15', color: '#8B6E4A', image: 'https://picsum.photos/seed/wuzhishan/160/120' },
+        { id: 'HN20240310004', routeName: '万宁亲子5日游', date: '2024-05-01', count: 3, price: 9840, status: 'pending', createdAt: '2024-03-10', color: '#A84A8F', image: 'https://picsum.photos/seed/wanning/160/120' },
+        { id: 'HN20240205005', routeName: '全岛美食5日探店', date: '2024-03-20', count: 2, price: 4360, status: 'cancelled', createdAt: '2024-02-05', color: '#E8824A', image: 'https://picsum.photos/seed/hainanfood/160/120' },
       ],
       favorites: [
-        { id: 1, name: '三亚精华', title: '三亚5日精华游', tags: ['海边', '度假'], desc: '亚龙湾·天涯海角·蜈支洲岛三大必游地', price: 2980, color: '#4A8FA8' },
-        { id: 2, name: '雨林探秘', title: '五指山雨林7日行', tags: ['雨林', '探险'], desc: '五指山国家公园·黎族村寨·热带植物园', price: 3680, color: '#8B6E4A' },
-        { id: 3, name: '亲子乐园', title: '万宁亲子5日游', tags: ['亲子', '海边'], desc: '石梅湾·日月湾·冲浪体验·神州半岛', price: 3280, color: '#A84A8F' },
+        { id: 1, name: '三亚精华', title: '三亚5日精华游', tags: ['海边', '度假'], desc: '亚龙湾·天涯海角·蜈支洲岛三大必游地', price: 2980, color: '#4A8FA8', image: 'https://picsum.photos/seed/sanya/400/280' },
+        { id: 2, name: '雨林探秘', title: '五指山雨林7日行', tags: ['雨林', '探险'], desc: '五指山国家公园·黎族村寨·热带植物园', price: 3680, color: '#8B6E4A', image: 'https://picsum.photos/seed/wuzhishan/400/280' },
+        { id: 3, name: '亲子乐园', title: '万宁亲子5日游', tags: ['亲子', '海边'], desc: '石梅湾·日月湾·冲浪体验·神州半岛', price: 3280, color: '#A84A8F', image: 'https://picsum.photos/seed/wanning/400/280' },
       ],
       profile: {
         nickname: '旅行者',
@@ -227,13 +231,13 @@ export default {
       myReviews: [
         {
           id: 1, routeName: '海口人文3日游', tripDate: '2024-03-10', createdAt: '2024-03-14',
-          rating: 4, color: '#5B9E6E',
+          rating: 4, color: '#5B9E6E', image: 'https://picsum.photos/seed/haikou/160/120',
           content: '骑楼老街真的很有历史感，各种热带水果和小吃物美价廉，海南粉也超级好吃！导游讲解很专业，强烈推荐这条线路。',
           reply: '感谢您的好评！欢迎下次再来，我们会继续提升服务质量。'
         },
         {
           id: 2, routeName: '五指山雨林7日行', tripDate: '2024-02-05', createdAt: '2024-02-12',
-          rating: 5, color: '#8B6E4A',
+          rating: 5, color: '#8B6E4A', image: 'https://picsum.photos/seed/wuzhishan/160/120',
           content: '五指山的雨林非常震撼，空气清新湿润，体验黎族文化也很有特色。行程安排合理，没有强制购物，完全按照描述执行，非常满意！',
           reply: null
         },
@@ -265,6 +269,23 @@ export default {
       this.reviewModal = { show: true, order, rating: 5, text: '' }
     },
     submitReview() {
+      const order = this.reviewModal.order
+      const today = new Date()
+      const dateStr = today.getFullYear() + '-' +
+        String(today.getMonth() + 1).padStart(2, '0') + '-' +
+        String(today.getDate()).padStart(2, '0')
+      this.myReviews.unshift({
+        id: Date.now(),
+        routeName: order.routeName,
+        tripDate: order.date,
+        createdAt: dateStr,
+        rating: this.reviewModal.rating,
+        color: order.color,
+        image: order.image || null,
+        content: this.reviewModal.text || '（未填写内容）',
+        reply: null,
+      })
+      order.status = 'reviewed'
       this.reviewModal.show = false
       this.showToast('评价提交成功！')
     },
@@ -369,6 +390,7 @@ export default {
 .order-status.pending { background: #FEF0E7; color: var(--color-accent); }
 .order-status.upcoming { background: #EBF4F8; color: var(--color-primary); }
 .order-status.completed { background: #E8F8EF; color: #27AE60; }
+.order-status.reviewed { background: #EBF4F8; color: var(--color-primary); }
 .order-status.cancelled { background: #F3F4F6; color: var(--color-text-light); }
 .order-body {
   display: flex;
@@ -387,6 +409,7 @@ export default {
   font-size: 20px;
   font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
+  overflow: hidden;
 }
 .order-info {
   flex: 1;
@@ -450,6 +473,7 @@ export default {
   color: var(--color-white);
   font-size: 18px;
   font-weight: var(--font-weight-semibold);
+  overflow: hidden;
 }
 .fav-body { padding: 14px; }
 .fav-title {
@@ -716,6 +740,13 @@ export default {
   font-size: 16px;
   font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
+  overflow: hidden;
+}
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .review-route-name {
   font-size: 14px;
