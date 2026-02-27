@@ -107,6 +107,35 @@
           </div>
         </div>
       </div>
+
+      <!-- 我的评价 -->
+      <div v-if="currentTab === 'reviews'" class="tab-content">
+        <div class="review-list">
+          <div v-for="review in myReviews" :key="review.id" class="my-review-card">
+            <div class="review-top">
+              <div class="review-route-info">
+                <div class="review-cover" :style="{ background: review.color }">
+                  <span>{{ review.routeName[0] }}</span>
+                </div>
+                <div>
+                  <h3 class="review-route-name">{{ review.routeName }}</h3>
+                  <p class="review-date-text">出行日期：{{ review.tripDate }}</p>
+                </div>
+              </div>
+              <span class="review-date-label">{{ review.createdAt }}</span>
+            </div>
+            <div class="review-stars">
+              <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= review.rating }">★</span>
+              <span class="rating-label">{{ review.rating === 5 ? '非常满意' : review.rating === 4 ? '满意' : review.rating === 3 ? '一般' : '不满意' }}</span>
+            </div>
+            <p class="review-content">{{ review.content }}</p>
+            <div v-if="review.reply" class="merchant-reply">
+              <span class="reply-label">商家回复：</span>{{ review.reply }}
+            </div>
+          </div>
+          <div v-if="myReviews.length === 0" class="empty-state">暂无评价记录</div>
+        </div>
+      </div>
     </div>
 
     <!-- Review Modal -->
@@ -161,6 +190,7 @@ export default {
       tabs: [
         { key: 'orders', label: '我的订单' },
         { key: 'favorites', label: '我的收藏' },
+        { key: 'reviews', label: '我的评价' },
         { key: 'profile', label: '个人信息' },
       ],
       orderSubTabs: [
@@ -194,6 +224,20 @@ export default {
         email: 'traveler@example.com',
         city: '北京',
       },
+      myReviews: [
+        {
+          id: 1, routeName: '海口人文3日游', tripDate: '2024-03-10', createdAt: '2024-03-14',
+          rating: 4, color: '#5B9E6E',
+          content: '骑楼老街真的很有历史感，各种热带水果和小吃物美价廉，海南粉也超级好吃！导游讲解很专业，强烈推荐这条线路。',
+          reply: '感谢您的好评！欢迎下次再来，我们会继续提升服务质量。'
+        },
+        {
+          id: 2, routeName: '五指山雨林7日行', tripDate: '2024-02-05', createdAt: '2024-02-12',
+          rating: 5, color: '#8B6E4A',
+          content: '五指山的雨林非常震撼，空气清新湿润，体验黎族文化也很有特色。行程安排合理，没有强制购物，完全按照描述执行，非常满意！',
+          reply: null
+        },
+      ],
       reviewModal: {
         show: false,
         order: null,
@@ -635,6 +679,85 @@ export default {
   font-size: 14px;
   z-index: 3000;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.my-review-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.review-route-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.review-cover {
+  width: 48px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+.review-route-name {
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 2px;
+}
+.review-date-text {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+.review-date-label {
+  font-size: 12px;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.review-stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.rating-label {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-left: 6px;
+}
+.review-content {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+.merchant-reply {
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+.reply-label {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
 }
 @media (max-width: 900px) {
   .favorites-grid {
